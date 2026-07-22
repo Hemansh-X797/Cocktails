@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import Image from 'next/image';
+import { SafeImage } from '@/components/ui/SafeImage';
 import Link from 'next/link';
 import { getAllSpirits, getAllCocktails } from '@/lib/content-store';
 
@@ -27,11 +27,9 @@ export default async function SpiritDetailPage({ params }: { params: { slug: str
             <h1 className="font-display text-6xl text-bone mt-4">{spirit.name}</h1>
             <p className="text-lg text-bone/70 mt-4">{spirit.description}</p>
           </div>
-          {spirit.image ? (
-            <div className="relative h-96 w-full">
-              <Image src={spirit.image} alt={spirit.name} fill className="object-contain drop-shadow-[0_20px_60px_rgba(0,0,0,0.7)]" />
-            </div>
-          ) : null}
+          <div className="relative h-96 w-full">
+            <SafeImage src={spirit.image} alt={spirit.name} fill className="object-contain drop-shadow-[0_20px_60px_rgba(0,0,0,0.7)]" />
+          </div>
         </div>
       </section>
 

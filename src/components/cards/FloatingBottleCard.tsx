@@ -1,8 +1,8 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
+import { SafeImage } from '@/components/ui/SafeImage';
 import { mapRange, clamp } from '@/lib/utils';
 import type { Spirit } from '@/lib/adapter';
 
@@ -45,7 +45,7 @@ export function FloatingBottleCard({ spirit }: { spirit: Spirit }) {
           }}
         />
         <div className="relative h-64 w-full" style={{ transform: 'translateZ(40px)' }}>
-          <Image
+          <SafeImage
             src={spirit.image}
             alt={spirit.name}
             fill

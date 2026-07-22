@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import Image from 'next/image';
+import { SafeImage } from '@/components/ui/SafeImage';
 import Link from 'next/link';
 import { getAllCocktails } from '@/lib/content-store';
 
@@ -77,11 +77,9 @@ export default async function CocktailDetailPage({ params }: { params: { slug: s
         </div>
       </section>
 
-      {cocktail.image ? (
-        <section className="relative h-[60vh] w-full">
-          <Image src={cocktail.image} alt={cocktail.name} fill className="object-cover" />
-        </section>
-      ) : null}
+      <section className="relative h-[60vh] w-full">
+        <SafeImage src={cocktail.image} alt={cocktail.name} fill className="object-cover" />
+      </section>
 
       <section className="px-8 py-20 max-w-3xl">
         <span className="section-eyebrow">The Story</span>

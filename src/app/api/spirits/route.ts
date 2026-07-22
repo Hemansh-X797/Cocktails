@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getAllSpirits, addSpirit, deleteSpirit } from '@/lib/content-store';
+import { getAllSpirits, addSpirit, editSpirit, deleteSpirit } from '@/lib/content-store';
 import { requirePermission } from '@/lib/session';
 import type { Spirit } from '@/lib/adapter';
 
@@ -32,6 +32,21 @@ export async function POST(req: NextRequest) {
 
   const created = await addSpirit(record);
   return NextResponse.json({ spirit: created }, { status: 201 });
+}
+
+export async function PATCH(req: NextRequest) {
+  const auth = await requirePermission('upload');
+  if (!auth.ok) return NextResponse.json({ error: auth.message }, { status: auth.status });
+
+  const body = await req.json().catch(() => null);
+  const slug = body?.slug;
+  if (!slug) return NextResponse.json({ error: 'slug is required.' }, { status: 400 });
+
+  const { slug: _omit, ...updates } = body;
+  const updated = await editSpirit(slug, updates);
+  if (!updated) return NextResponse.json({ error: 'Spirit not found.' }, { status: 404 });
+
+  return NextResponse.json({ spirit: updated });
 }
 
 export async function DELETE(req: NextRequest) {

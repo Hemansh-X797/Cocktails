@@ -10,6 +10,9 @@ export const metadata: Metadata = {
   title: 'My Cocktail Guide — Haute Mixology',
   description:
     'An avant-garde archive of rare spirits, obsidian cocktails, and precision bartending tools.',
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import Image from 'next/image';
+import { SafeImage } from '@/components/ui/SafeImage';
 import Link from 'next/link';
 import { getAllTools } from '@/lib/content-store';
 
@@ -17,11 +17,7 @@ export default async function ToolDetailPage({ params }: { params: { slug: strin
           ← Back to the Arsenal
         </Link>
         <div className="relative h-96 md:h-full">
-          {tool.image ? (
-            <Image src={tool.image} alt={tool.name} fill className="object-cover" />
-          ) : (
-            <div className="h-full w-full bg-obsidian" />
-          )}
+          <SafeImage src={tool.image} alt={tool.name} fill className="object-cover" />
         </div>
         <div className="flex flex-col justify-center px-8 py-16">
           <span className="section-eyebrow">{tool.category} · {tool.material}</span>
