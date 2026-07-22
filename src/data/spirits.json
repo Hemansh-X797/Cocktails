@@ -1,0 +1,54 @@
+[
+  {
+    "slug": "blavod-black-vodka",
+    "name": "Blavod Black Vodka",
+    "category": "Vodka",
+    "origin": "United Kingdom",
+    "abv": 40,
+    "color": "#050505",
+    "tagline": "Catechu-black, wheat-clean.",
+    "description": "Blavod is triple-distilled British wheat vodka colored not with additive dye but with a natural catechu extract — the same compound used in traditional inks. The result is an ink-black spirit that pours clean and finishes crisp, upending every visual expectation of what vodka should look like.",
+    "tastingNotes": ["Clean wheat", "Faint liquorice", "Cold mineral finish"],
+    "bestIn": ["black-widow"],
+    "image": "/images/spirits/blavod-black-vodka.webp"
+  },
+  {
+    "slug": "hypnotiq",
+    "name": "Hypnotiq",
+    "category": "Liqueur",
+    "origin": "France / USA",
+    "abv": 17,
+    "color": "#1e5fff",
+    "tagline": "Cognac, vodka, and tropical fruit in electric blue.",
+    "description": "A neon-blue liqueur blending French vodka, cognac, and tropical fruit juices. Hypnotiq trades subtlety for spectacle — it exists to be a visual centerpiece as much as a flavor, making it a favorite base for high-contrast layered pours.",
+    "tastingNotes": ["Tropical fruit", "Faint cognac warmth", "Citrus brightness"],
+    "bestIn": [],
+    "image": "/images/spirits/hypnotiq.webp"
+  },
+  {
+    "slug": "ancho-reyes",
+    "name": "Ancho Reyes",
+    "category": "Chile Liqueur",
+    "origin": "Puebla, Mexico",
+    "abv": 40,
+    "color": "#5c1a0f",
+    "tagline": "Smoked ancho chile, centuries-old recipe.",
+    "description": "Made from rehydrated ancho chiles macerated for months before distillation, following a recipe dating to 1927 in Puebla. Deep smoked-pepper heat balanced with a raisin-like sweetness — built to add controlled fire to dark, spirit-forward builds.",
+    "tastingNotes": ["Smoked chile", "Dried fruit", "Slow building heat"],
+    "bestIn": ["sovereign-of-the-void"],
+    "image": "/images/spirits/ancho-reyes.webp"
+  },
+  {
+    "slug": "obsidian-artisanal-gin",
+    "name": "Obsidian Artisanal Gin",
+    "category": "Gin",
+    "origin": "Small-batch, Scotland",
+    "abv": 44,
+    "color": "#0a0a0a",
+    "tagline": "Botanical-forward gin, activated-charcoal black.",
+    "description": "A small-batch London Dry base infused with juniper, black cardamom, and a touch of smoked lapsang souchong tea, finished with activated charcoal filtration reversed to leave a deliberate ink-black tint. Built for bartenders who want a gin that changes the color of everything it touches.",
+    "tastingNotes": ["Juniper forward", "Smoked tea", "Black cardamom"],
+    "bestIn": [],
+    "image": "/images/spirits/obsidian-artisanal-gin.webp"
+  }
+]

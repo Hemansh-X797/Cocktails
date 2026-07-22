@@ -1,0 +1,118 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-display: 'Canela', 'Playfair Display', serif;
+  --font-body: 'Neue Montreal', 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #8b0000 #050505;
+}
+
+html {
+  background: #050505;
+}
+
+body {
+  background: #050505;
+  color: #ece7dd;
+  cursor: none;
+  overflow-x: hidden;
+  font-family: var(--font-body);
+}
+
+@media (max-width: 768px), (hover: none) {
+  body {
+    cursor: auto;
+  }
+  .bespoke-cursor {
+    display: none;
+  }
+}
+
+::selection {
+  background: #8b0000;
+  color: #ece7dd;
+}
+
+/* ---------- Bespoke Cursor ---------- */
+.bespoke-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: #ece7dd;
+  mix-blend-mode: difference;
+  pointer-events: none;
+  z-index: 9999;
+  will-change: transform;
+  transform: translate3d(-50%, -50%, 0);
+}
+
+/* ---------- Section rhythm ---------- */
+.section-eyebrow {
+  font-family: var(--font-mono);
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  color: #e5c158;
+}
+
+.hairline {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, rgba(229, 193, 88, 0.5), transparent);
+}
+
+/* ---------- Frame canvas ---------- */
+.hero-canvas-wrapper {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background: #050505;
+}
+
+.hero-canvas-wrapper canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ---------- Focus states (accessibility, never sacrificed for aesthetics) ---------- */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #e5c158;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- Utility: gold hairline divider component ---------- */
+.divider-gold {
+  height: 1px;
+  background-image: linear-gradient(90deg, transparent, #e5c158, transparent);
+}
+
+.card-velvet {
+  background: linear-gradient(180deg, rgba(18, 18, 18, 0.9), rgba(5, 5, 5, 0.95));
+  border: 1px solid rgba(229, 193, 88, 0.15);
+}

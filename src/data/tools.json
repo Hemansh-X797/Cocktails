@@ -1,0 +1,62 @@
+[
+  {
+    "slug": "damascus-steel-cobbler-shaker",
+    "name": "Damascus Steel Cobbler Shaker",
+    "category": "Shaker",
+    "material": "Hand-folded Damascus steel, 67 layers",
+    "tagline": "The blade-forging technique, turned toward the bar.",
+    "description": "Each shaker is forged using the same folding technique as Damascus steel blades — 67 layers folded and hammered to produce the signature watered-silk pattern, no two shakers identical. Vacuum-insulated core keeps chill without exterior sweat.",
+    "specs": [
+      { "label": "Capacity", "value": "550ml" },
+      { "label": "Weight", "value": "410g" },
+      { "label": "Finish", "value": "Hand-polished, acid-etched pattern" },
+      { "label": "Build time", "value": "11 hours per unit" }
+    ],
+    "image": "/images/tools/damascus-steel-cobbler-shaker.webp"
+  },
+  {
+    "slug": "obsidian-glass-mixing-cylinder",
+    "name": "Obsidian Glass Mixing Cylinder",
+    "category": "Mixing Glass",
+    "material": "Lead-free black crystal",
+    "tagline": "Weighted crystal, engineered for the stir.",
+    "description": "A hand-blown black crystal mixing cylinder with a weighted base for stability during long stirs and a precision-cut lip for a controlled, silent pour. The opaque black hides the drink's color until it hits the glass — a deliberate piece of theater.",
+    "specs": [
+      { "label": "Capacity", "value": "700ml" },
+      { "label": "Wall thickness", "value": "4mm" },
+      { "label": "Base", "value": "Weighted, non-slip crystal foot" },
+      { "label": "Origin", "value": "Hand-blown, Czech workshop" }
+    ],
+    "image": "/images/tools/obsidian-glass-mixing-cylinder.webp"
+  },
+  {
+    "slug": "precision-titanium-jigger",
+    "name": "Precision Titanium Jigger",
+    "category": "Jigger",
+    "material": "Aerospace-grade titanium",
+    "tagline": "Laser-etched to the milliliter.",
+    "description": "Milled from aerospace-grade titanium and laser-etched with internal measurement rings from 15ml to 60ml, accurate to within 0.5ml. Anodized in a deep obsidian finish that resists fingerprinting and scratching under bar-speed use.",
+    "specs": [
+      { "label": "Measurements", "value": "15 / 30 / 45 / 60 ml" },
+      { "label": "Tolerance", "value": "±0.5ml" },
+      { "label": "Finish", "value": "Anodized titanium, matte black" },
+      { "label": "Weight", "value": "62g" }
+    ],
+    "image": "/images/tools/precision-titanium-jigger.webp"
+  },
+  {
+    "slug": "hand-carved-ice-chisels",
+    "name": "Hand-Carved Ice Chisels",
+    "category": "Ice Tools",
+    "material": "Forged high-carbon steel, walnut handle",
+    "tagline": "For sculpting the clearest sphere in the room.",
+    "description": "A three-piece chisel set forged for directional ice carving — splitting, faceting, and final polishing of clear-cut ice spheres and diamonds. Walnut handles are hand-fitted to each blade tang for balance during repetitive, controlled strikes.",
+    "specs": [
+      { "label": "Set", "value": "3 chisels + mallet" },
+      { "label": "Blade steel", "value": "High-carbon, hand-forged" },
+      { "label": "Handle", "value": "Fitted walnut" },
+      { "label": "Use case", "value": "Clear ice sculpting, spheres, diamonds" }
+    ],
+    "image": "/images/tools/hand-carved-ice-chisels.webp"
+  }
+]

@@ -1,0 +1,76 @@
+[
+  {
+    "slug": "sovereign-of-the-void",
+    "name": "The Sovereign of the Void",
+    "tagline": "Obsidian in a glass, ember in the finish.",
+    "heroColor": "#050505",
+    "rimColor": "#8b0000",
+    "abv": 34,
+    "servingGlass": "Nick & Nora, chilled to −4°C",
+    "prepTime": "6 min",
+    "difficulty": "Advanced",
+    "description": "A pitch-black obsidian pour built on activated charcoal and rye, cut with smoked rosemary and a bitter velvet amaro float. The rim is painted in crimson bitters reduction — the only color permitted to break the black. This is not a drink that asks to be liked. It asks to be understood.",
+    "flavorProfile": {
+      "bitter": 80,
+      "smoke": 70,
+      "sweet": 15,
+      "spirit": 90,
+      "herbal": 55
+    },
+    "ingredients": [
+      { "name": "Rye whiskey, cask strength", "amount": "60ml" },
+      { "name": "Activated charcoal tincture", "amount": "2 dashes" },
+      { "name": "Bitter velvet amaro", "amount": "20ml" },
+      { "name": "Smoked rosemary syrup", "amount": "10ml" },
+      { "name": "Crimson bitters (rim reduction)", "amount": "rim only" },
+      { "name": "Obsidian smoking chip", "amount": "1, for the cloche" }
+    ],
+    "method": [
+      "Torch a rosemary sprig under a smoking cloche until the glass fills with ember-grey smoke.",
+      "In a mixing glass over a single obsidian-black sphere, combine rye, amaro, and smoked rosemary syrup.",
+      "Stir 40 rotations — slow, deliberate, no splash.",
+      "Paint the rim of a frozen Nick & Nora with crimson bitters reduction using a fine brush.",
+      "Strain into the glass beneath the still-lingering smoke, releasing the cloche tableside."
+    ],
+    "pairings": ["Dark chocolate 85%", "Charred octopus", "Aged gouda with black truffle"],
+    "story": "Conceived as the closing pour of a tasting menu — the drink that ends the night rather than continues it.",
+    "image": "/images/cocktails/sovereign-of-the-void.webp"
+  },
+  {
+    "slug": "black-widow",
+    "name": "Black Widow",
+    "tagline": "Blackberry venom, gold-leaf warning.",
+    "heroColor": "#0d0208",
+    "rimColor": "#e5c158",
+    "abv": 28,
+    "servingGlass": "Coupe, gold-leafed rim",
+    "prepTime": "5 min",
+    "difficulty": "Intermediate",
+    "description": "Wild blackberry muddled into dark rum and activated charcoal, finished with a single suspended flake of 24k gold leaf — beauty and danger sharing the same glass. Deep, fruit-forward, and unapologetically theatrical.",
+    "flavorProfile": {
+      "bitter": 30,
+      "smoke": 20,
+      "sweet": 55,
+      "spirit": 75,
+      "herbal": 10
+    },
+    "ingredients": [
+      { "name": "Dark rum, 8-year", "amount": "50ml" },
+      { "name": "Wild blackberry purée", "amount": "25ml" },
+      { "name": "Activated charcoal", "amount": "1 dash" },
+      { "name": "Fresh lime", "amount": "15ml" },
+      { "name": "Demerara syrup", "amount": "10ml" },
+      { "name": "24k gold leaf", "amount": "1 flake, suspended" }
+    ],
+    "method": [
+      "Muddle fresh blackberries at the bottom of a shaker tin.",
+      "Add rum, lime, demerara syrup, and activated charcoal over cubed ice.",
+      "Shake hard for 12 seconds — you want the charcoal fully suspended in the blackberry black.",
+      "Double strain into a coupe rimmed with gold leaf dust.",
+      "Float a single flake of gold leaf on the surface just before serving."
+    ],
+    "pairings": ["Duck confit", "Blue cheese and fig", "Dark berry tart"],
+    "story": "Named for its deceptive elegance — soft on the nose, sharp in the tail.",
+    "image": "/images/cocktails/black-widow.webp"
+  }
+]
