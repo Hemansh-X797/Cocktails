@@ -17,6 +17,7 @@ export function SafeImage({
   sizes,
   fallbackFrom = '#1a1a1a',
   fallbackTo = '#050505',
+  draggable,
 }: {
   src?: string;
   alt: string;
@@ -25,6 +26,7 @@ export function SafeImage({
   sizes?: string;
   fallbackFrom?: string;
   fallbackTo?: string;
+  draggable?: boolean;
 }) {
   const [errored, setErrored] = useState(false);
 
@@ -52,6 +54,7 @@ export function SafeImage({
       fill={fill}
       sizes={sizes}
       className={className}
+      draggable={draggable}
       onError={() => setErrored(true)}
       unoptimized={src.startsWith('http')}
     />

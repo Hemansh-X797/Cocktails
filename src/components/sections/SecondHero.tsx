@@ -35,7 +35,8 @@ export function SecondHero() {
           rendered in real time.
         </h2>
         <p className="mt-6 max-w-md text-bone/50 text-sm">
-          Move your cursor — the glass responds. Every facet here is built from geometry, not a photograph.
+          One pour, held mid-air — light passing through crystal, wine finding
+          its level. Nothing about a great glass ever holds still.
         </p>
       </div>
 

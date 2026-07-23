@@ -23,7 +23,7 @@ export function GalleryCarousels({
           <span className="section-eyebrow">The Gallery</span>
           <h2 className="font-display text-5xl text-bone mt-3">Scroll Through the Archive</h2>
           <p className="mt-3 max-w-md text-bone/50 text-sm">
-            Scroll inside the frame below — each pour drifts into place.
+            Drag, or scroll — the archive turns at the pace of your hand.
           </p>
         </div>
         <ImageCarousel3D images={images} />
@@ -32,9 +32,9 @@ export function GalleryCarousels({
       <section className="relative bg-void px-8 py-28">
         <div className="mb-14">
           <span className="section-eyebrow">The Instruments</span>
-          <h2 className="font-display text-5xl text-bone mt-3">A Carousel, Rendered</h2>
+          <h2 className="font-display text-5xl text-bone mt-3">The Bar, Considered</h2>
           <p className="mt-3 max-w-md text-bone/50 text-sm">
-            No photographs here — every object is built from geometry and scrolls into rotation.
+            Precision tools, held and turned as if in the hand.
           </p>
         </div>
         <ObjectCarousel3D />

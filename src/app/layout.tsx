@@ -3,6 +3,7 @@ import './globals.css';
 import { SmoothScrollProvider } from '@/components/luxury/SmoothScrollProvider';
 import { BespokeCursor } from '@/components/luxury/BespokeCursor';
 import { AmbientAudio } from '@/components/luxury/AmbientAudio';
+import { EntryLoader } from '@/components/luxury/EntryLoader';
 import { CommandPalette } from '@/components/search/CommandPalette';
 import { getSearchIndex } from '@/lib/adapter';
 
@@ -21,6 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
+        <EntryLoader />
         <SmoothScrollProvider>
           <BespokeCursor />
           <CommandPalette index={searchIndex} />

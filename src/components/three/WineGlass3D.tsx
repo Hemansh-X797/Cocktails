@@ -2,69 +2,73 @@
 
 import { Suspense, useMemo, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Environment, MeshTransmissionMaterial, Float } from '@react-three/drei';
+import { Environment, MeshTransmissionMaterial, Float, ContactShadows } from '@react-three/drei';
 import * as THREE from 'three';
+import { splineLatheProfile } from '@/lib/geometry';
 
 /**
- * A procedurally-built wine glass — no external model file. The bowl,
- * stem, and foot are all one revolved silhouette (THREE.LatheGeometry),
- * rendered with a physically-based transmission material for real glass
- * refraction. A separate, slightly-inset lathe holds the "liquid" — a deep
- * ruby mesh whose height is set below the rim so it reads as a pour, not
- * a full glass.
+ * A procedurally-built wine glass — no external model file. Rather than
+ * lathing a raw polyline (which reads as faceted and slightly "broken" at
+ * the rim and stem knuckle), the outer silhouette is authored as a small
+ * set of anchor points and passed through a Catmull-Rom-style spline, then
+ * densely resampled. That's what makes the bowl wall, the stem taper, and
+ * the foot lip read as one continuous, hand-blown curve instead of a
+ * chain of straight segments. The liquid gets its own, independently
+ * sampled curve so the meniscus stays glassy-smooth at any fill level.
  */
 
-function buildGlassProfile(): THREE.Vector2[] {
-  // Points trace the outer silhouette from foot to rim, in (radius, height).
-  return [
-    new THREE.Vector2(0.0, 0.0),
-    new THREE.Vector2(0.55, 0.0),
-    new THREE.Vector2(0.55, 0.04),
-    new THREE.Vector2(0.08, 0.08),
-    new THREE.Vector2(0.06, 0.55),
-    new THREE.Vector2(0.05, 0.6),
-    new THREE.Vector2(0.05, 0.62),
-    new THREE.Vector2(0.32, 0.72),
-    new THREE.Vector2(0.5, 0.95),
-    new THREE.Vector2(0.56, 1.15),
-    new THREE.Vector2(0.5, 1.35),
-    new THREE.Vector2(0.36, 1.46),
-    new THREE.Vector2(0.34, 1.47),
-    new THREE.Vector2(0.36, 1.475),
-    new THREE.Vector2(0.34, 1.48),
-  ];
-}
+// Anchor points from foot to rim, in (radius, height). Kept sparse —
+// the spline does the smoothing, more points here would just fight it.
+const GLASS_ANCHORS: [number, number][] = [
+  [0.0, 0.0],
+  [0.52, 0.0],
+  [0.5, 0.035],
+  [0.07, 0.075],
+  [0.065, 0.5],
+  [0.06, 0.6],
+  [0.16, 0.66],
+  [0.44, 0.88],
+  [0.53, 1.08],
+  [0.535, 1.22],
+  [0.47, 1.4],
+  [0.35, 1.5],
+  [0.345, 1.505],
+];
+
+const LIQUID_ANCHORS_BASE: [number, number][] = [
+  [0.0, 0.6],
+  [0.06, 0.61],
+  [0.17, 0.665],
+  [0.4, 0.85],
+];
 
 function buildLiquidProfile(fillLevel: number): THREE.Vector2[] {
-  // A shorter profile matching the bowl's interior curve up to fillLevel.
-  return [
-    new THREE.Vector2(0.0, 0.63),
-    new THREE.Vector2(0.05, 0.63),
-    new THREE.Vector2(0.3, 0.7),
-    new THREE.Vector2(0.46, 0.9),
-    new THREE.Vector2(0.5, fillLevel),
-  ];
+  const anchors: [number, number][] = [...LIQUID_ANCHORS_BASE, [0.5, fillLevel]];
+  return splineLatheProfile(anchors, 40);
 }
 
 function GlassBody() {
-  const points = useMemo(buildGlassProfile, []);
-  const geometry = useMemo(
-    () => new THREE.LatheGeometry(points, 64),
-    [points]
-  );
+  const points = useMemo(() => splineLatheProfile(GLASS_ANCHORS, 90), []);
+  const geometry = useMemo(() => {
+    const geo = new THREE.LatheGeometry(points, 96);
+    geo.computeVertexNormals();
+    return geo;
+  }, [points]);
 
   return (
     <mesh geometry={geometry} castShadow receiveShadow>
       <MeshTransmissionMaterial
         transmission={1}
-        thickness={0.35}
-        roughness={0.02}
-        ior={1.5}
-        chromaticAberration={0.02}
-        anisotropy={0.1}
-        distortion={0.1}
-        distortionScale={0.2}
-        temporalDistortion={0.05}
+        thickness={0.32}
+        roughness={0.015}
+        ior={1.52}
+        chromaticAberration={0.015}
+        anisotropy={0.06}
+        distortion={0.06}
+        distortionScale={0.15}
+        temporalDistortion={0.03}
+        clearcoat={1}
+        clearcoatRoughness={0.05}
         color="#fefdfb"
         background={new THREE.Color('#050505')}
       />
@@ -72,20 +76,26 @@ function GlassBody() {
   );
 }
 
-function Liquid({ fillLevel = 1.05 }: { fillLevel?: number }) {
+function Liquid({ fillLevel = 1.02 }: { fillLevel?: number }) {
   const points = useMemo(() => buildLiquidProfile(fillLevel), [fillLevel]);
-  const geometry = useMemo(() => new THREE.LatheGeometry(points, 64), [points]);
+  const geometry = useMemo(() => {
+    const geo = new THREE.LatheGeometry(points, 96);
+    geo.computeVertexNormals();
+    return geo;
+  }, [points]);
 
   return (
     <mesh geometry={geometry}>
       <meshPhysicalMaterial
-        color="#6b0016"
-        roughness={0.15}
-        transmission={0.6}
-        thickness={1.2}
-        ior={1.33}
-        emissive="#2a0008"
-        emissiveIntensity={0.15}
+        color="#5e0014"
+        roughness={0.1}
+        transmission={0.55}
+        thickness={1.4}
+        ior={1.35}
+        emissive="#22000a"
+        emissiveIntensity={0.12}
+        clearcoat={0.6}
+        clearcoatRoughness={0.2}
       />
     </mesh>
   );
@@ -93,39 +103,51 @@ function Liquid({ fillLevel = 1.05 }: { fillLevel?: number }) {
 
 function Scene({ fillLevel }: { fillLevel: number }) {
   const groupRef = useRef<THREE.Group>(null);
+  const pointerLerp = useRef({ x: 0, y: 0 });
 
   useFrame((state) => {
     if (!groupRef.current) return;
     const t = state.clock.getElapsedTime();
-    groupRef.current.rotation.y = Math.sin(t * 0.15) * 0.4 + t * 0.08;
-    // Subtle parallax toward pointer position.
-    groupRef.current.rotation.x = state.pointer.y * 0.08;
+
+    // Slow, autonomous turntable drift — the piece is always alive, never inert.
+    const autoY = t * 0.06;
+
+    // Pointer parallax is blended in gently underneath the autonomous drift
+    // rather than replacing it, so the object never looks "dead" when the
+    // cursor sits still, and never snaps when the cursor arrives.
+    pointerLerp.current.x += (state.pointer.y * 0.06 - pointerLerp.current.x) * 0.04;
+    pointerLerp.current.y += (state.pointer.x * 0.15 - pointerLerp.current.y) * 0.04;
+
+    groupRef.current.rotation.y = autoY + pointerLerp.current.y;
+    groupRef.current.rotation.x = pointerLerp.current.x;
   });
 
   return (
-    <group ref={groupRef} position={[0, -0.75, 0]}>
+    <group ref={groupRef} position={[0, -0.78, 0]}>
       <GlassBody />
       <Liquid fillLevel={fillLevel} />
     </group>
   );
 }
 
-export function WineGlass3D({ fillLevel = 1.05 }: { fillLevel?: number }) {
+export function WineGlass3D({ fillLevel = 1.02 }: { fillLevel?: number }) {
   return (
     <div className="absolute inset-0">
       <Canvas
-        camera={{ position: [0, 0.2, 3.4], fov: 35 }}
+        camera={{ position: [0, 0.15, 3.6], fov: 32 }}
         dpr={[1, 2]}
         gl={{ antialias: true, alpha: true }}
       >
         <Suspense fallback={null}>
-          <Float speed={1.4} rotationIntensity={0.15} floatIntensity={0.6}>
+          <Float speed={1.1} rotationIntensity={0.06} floatIntensity={0.45}>
             <Scene fillLevel={fillLevel} />
           </Float>
           <Environment preset="city" />
-          <spotLight position={[3, 5, 4]} intensity={2} color="#e5c158" angle={0.4} penumbra={1} />
-          <spotLight position={[-4, 2, -3]} intensity={1.2} color="#8b0000" angle={0.5} penumbra={1} />
-          <ambientLight intensity={0.15} />
+          <spotLight position={[3, 5, 4]} intensity={2.2} color="#e5c158" angle={0.35} penumbra={1} />
+          <spotLight position={[-4, 2, -3]} intensity={1.1} color="#8b0000" angle={0.5} penumbra={1} />
+          <spotLight position={[0, -3, 2]} intensity={0.4} color="#ffffff" angle={0.6} penumbra={1} />
+          <ambientLight intensity={0.12} />
+          <ContactShadows position={[0, -1.55, 0]} opacity={0.55} scale={6} blur={2.4} far={2} color="#000000" />
         </Suspense>
       </Canvas>
     </div>

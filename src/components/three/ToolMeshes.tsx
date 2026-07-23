@@ -2,6 +2,7 @@
 
 import { useMemo } from 'react';
 import * as THREE from 'three';
+import { splineLatheProfile } from '@/lib/geometry';
 
 /** A cobbler shaker: cylindrical body, tapered cap, small cap-of-the-cap. */
 export function ShakerMesh() {
@@ -27,41 +28,47 @@ export function ShakerMesh() {
   );
 }
 
-/** A jigger: two truncated cones joined at their narrow ends (hourglass). */
+/** A jigger: two truncated cones joined at their narrow ends (hourglass), smoothed. */
 export function JiggerMesh() {
   const geometry = useMemo(() => {
-    const points = [
-      new THREE.Vector2(0.0, 0.0),
-      new THREE.Vector2(0.38, 0.0),
-      new THREE.Vector2(0.38, 0.06),
-      new THREE.Vector2(0.12, 0.45),
-      new THREE.Vector2(0.1, 0.5),
-      new THREE.Vector2(0.12, 0.55),
-      new THREE.Vector2(0.3, 0.92),
-      new THREE.Vector2(0.3, 1.0),
+    const anchors: [number, number][] = [
+      [0.0, 0.0],
+      [0.38, 0.0],
+      [0.37, 0.055],
+      [0.13, 0.43],
+      [0.1, 0.5],
+      [0.13, 0.57],
+      [0.29, 0.9],
+      [0.295, 1.0],
     ];
-    return new THREE.LatheGeometry(points, 32);
+    const points = splineLatheProfile(anchors, 48);
+    const geo = new THREE.LatheGeometry(points, 40);
+    geo.computeVertexNormals();
+    return geo;
   }, []);
 
   return (
     <mesh geometry={geometry} castShadow>
-      <meshStandardMaterial color="#1a1a1a" metalness={0.9} roughness={0.3} />
+      <meshStandardMaterial color="#1a1a1a" metalness={0.9} roughness={0.28} />
     </mesh>
   );
 }
 
-/** A rocks/tumbler glass, built the same lathe-revolve way as the hero wine glass. */
+/** A rocks/tumbler glass, spline-smoothed the same way as the hero wine glass. */
 export function RocksGlassMesh() {
   const geometry = useMemo(() => {
-    const points = [
-      new THREE.Vector2(0.0, 0.0),
-      new THREE.Vector2(0.5, 0.0),
-      new THREE.Vector2(0.5, 0.05),
-      new THREE.Vector2(0.48, 0.75),
-      new THREE.Vector2(0.5, 0.85),
-      new THREE.Vector2(0.52, 0.86),
+    const anchors: [number, number][] = [
+      [0.0, 0.0],
+      [0.5, 0.0],
+      [0.49, 0.05],
+      [0.465, 0.7],
+      [0.48, 0.82],
+      [0.5, 0.86],
     ];
-    return new THREE.LatheGeometry(points, 48);
+    const points = splineLatheProfile(anchors, 48);
+    const geo = new THREE.LatheGeometry(points, 56);
+    geo.computeVertexNormals();
+    return geo;
   }, []);
 
   return (
@@ -69,8 +76,10 @@ export function RocksGlassMesh() {
       <meshPhysicalMaterial
         transmission={0.95}
         thickness={0.4}
-        roughness={0.05}
+        roughness={0.04}
         ior={1.5}
+        clearcoat={0.8}
+        clearcoatRoughness={0.08}
         color="#fefdfb"
       />
     </mesh>
