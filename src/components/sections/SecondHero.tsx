@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { WineGlass3D } from '@/components/three/WineGlass3D';
+import { SketchfabEmbed } from '@/components/three/SketchfabEmbed';
 
 export function SecondHero() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -12,7 +12,7 @@ export function SecondHero() {
     if (!el) return;
     const observer = new IntersectionObserver(
       ([entry]) => setVisible(entry.isIntersecting),
-      { threshold: 0.3 }
+      { threshold: 0.15 }
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -25,19 +25,24 @@ export function SecondHero() {
     >
       <div className="bg-ruby-radial absolute inset-0" />
 
-      {visible && <WineGlass3D fillLevel={1.05} />}
+      {visible && (
+        <SketchfabEmbed
+          modelId="92d9d82f45ea40be8cb4774d929454db"
+          title="Wine Bottle and Glasses"
+          author="Karolina Renkiewicz"
+          authorUrl="https://sketchfab.com/KarolinaRenkiewicz"
+          modelUrl="https://sketchfab.com/3d-models/wine-bottle-and-glasses-92d9d82f45ea40be8cb4774d929454db"
+          className="absolute inset-0"
+        />
+      )}
 
       <div className="pointer-events-none relative z-10 flex flex-col items-center text-center px-8">
         <span className="section-eyebrow mb-6">Poured, Suspended, Held</span>
         <h2 className="font-display text-5xl md:text-7xl text-bone max-w-3xl leading-[0.95]">
-          A single pour,
+          Bottle to glass,
           <br />
-          rendered in real time.
+          nothing left to chance.
         </h2>
-        <p className="mt-6 max-w-md text-bone/50 text-sm">
-          One pour, held mid-air — light passing through crystal, wine finding
-          its level. Nothing about a great glass ever holds still.
-        </p>
       </div>
 
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 font-mono text-[10px] uppercase tracking-widest2 text-bone/30">
