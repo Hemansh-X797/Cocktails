@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthSession } from '@/hooks/useAuthSession';
 import { ImageField } from '@/components/dashboard/ImageField';
+import { safeFetchJson } from '@/lib/safeFetchJson';
 import type { Cocktail, Spirit, Tool } from '@/lib/adapter';
 
 type Tab = 'cocktails' | 'spirits' | 'tools';
@@ -65,6 +66,23 @@ export default function DashboardPage() {
 
   const [saving, setSaving] = useState(false);
   const [feedback, setFeedback] = useState('');
+  const [feedbackKind, setFeedbackKind] = useState<'success' | 'error'>('success');
+  const [deletingSlug, setDeletingSlug] = useState<string | null>(null);
+
+  function announce(message: string, kind: 'success' | 'error') {
+    setFeedback(message);
+    setFeedbackKind(kind);
+  }
+
+  useEffect(() => {
+    if (!feedback) return;
+    const t = setTimeout(() => setFeedback(''), dismissDelayFor(feedbackKind));
+    return () => clearTimeout(t);
+  }, [feedback, feedbackKind]);
+
+  function dismissDelayFor(kind: 'success' | 'error') {
+    return kind === 'error' ? 7000 : 4000;
+  }
 
   useEffect(() => {
     if (!loading && !isAuthenticated) router.push('/login');
@@ -72,13 +90,14 @@ export default function DashboardPage() {
 
   async function refreshAll() {
     const [c, s, t] = await Promise.all([
-      fetch('/api/cocktails').then((r) => r.json()),
-      fetch('/api/spirits').then((r) => r.json()),
-      fetch('/api/tools').then((r) => r.json()),
+      safeFetchJson<{ cocktails: Cocktail[] }>('/api/cocktails'),
+      safeFetchJson<{ spirits: Spirit[] }>('/api/spirits'),
+      safeFetchJson<{ tools: Tool[] }>('/api/tools'),
     ]);
-    setCocktails(c.cocktails);
-    setSpirits(s.spirits);
-    setTools(t.tools);
+    if (c.ok) setCocktails(c.data.cocktails);
+    if (s.ok) setSpirits(s.data.spirits);
+    if (t.ok) setTools(t.data.tools);
+    if (!c.ok || !s.ok || !t.ok) announce('Some content failed to refresh. Pull to refresh or reload.', 'error');
   }
 
   useEffect(() => {
@@ -106,6 +125,7 @@ export default function DashboardPage() {
 
   async function submitCocktail(e: React.FormEvent) {
     e.preventDefault();
+    if (saving) return;
     setSaving(true);
     setFeedback('');
     const payload: Record<string, unknown> = {
@@ -120,25 +140,27 @@ export default function DashboardPage() {
     };
     if (editingCocktail) payload.slug = editingCocktail;
 
-    const res = await fetch('/api/cocktails', {
+    const result = await safeFetchJson<{ cocktail: Cocktail }>('/api/cocktails', {
       method: editingCocktail ? 'PATCH' : 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
-    const data = await res.json();
-    setSaving(false);
-    if (res.ok) {
-      setFeedback(editingCocktail ? `Updated "${data.cocktail.name}".` : `Added "${data.cocktail.name}".`);
+
+    setSaving(false); // guaranteed to run — safeFetchJson never throws past this point
+
+    if (result.ok) {
+      announce(editingCocktail ? `Updated "${result.data.cocktail.name}".` : `Added "${result.data.cocktail.name}".`, 'success');
       setCocktailForm(emptyCocktail);
       setEditingCocktail(null);
       refreshAll();
     } else {
-      setFeedback(data.error || 'Failed to save cocktail.');
+      announce(result.error, 'error');
     }
   }
 
   async function submitSpirit(e: React.FormEvent) {
     e.preventDefault();
+    if (saving) return;
     setSaving(true);
     setFeedback('');
     const payload: Record<string, unknown> = {
@@ -148,25 +170,27 @@ export default function DashboardPage() {
     };
     if (editingSpirit) payload.slug = editingSpirit;
 
-    const res = await fetch('/api/spirits', {
+    const result = await safeFetchJson<{ spirit: Spirit }>('/api/spirits', {
       method: editingSpirit ? 'PATCH' : 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
-    const data = await res.json();
+
     setSaving(false);
-    if (res.ok) {
-      setFeedback(editingSpirit ? `Updated "${data.spirit.name}".` : `Added "${data.spirit.name}".`);
+
+    if (result.ok) {
+      announce(editingSpirit ? `Updated "${result.data.spirit.name}".` : `Added "${result.data.spirit.name}".`, 'success');
       setSpiritForm(emptySpirit);
       setEditingSpirit(null);
       refreshAll();
     } else {
-      setFeedback(data.error || 'Failed to save spirit.');
+      announce(result.error, 'error');
     }
   }
 
   async function submitTool(e: React.FormEvent) {
     e.preventDefault();
+    if (saving) return;
     setSaving(true);
     setFeedback('');
     const payload: Record<string, unknown> = {
@@ -178,27 +202,38 @@ export default function DashboardPage() {
     };
     if (editingTool) payload.slug = editingTool;
 
-    const res = await fetch('/api/tools', {
+    const result = await safeFetchJson<{ tool: Tool }>('/api/tools', {
       method: editingTool ? 'PATCH' : 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
-    const data = await res.json();
+
     setSaving(false);
-    if (res.ok) {
-      setFeedback(editingTool ? `Updated "${data.tool.name}".` : `Added "${data.tool.name}".`);
+
+    if (result.ok) {
+      announce(editingTool ? `Updated "${result.data.tool.name}".` : `Added "${result.data.tool.name}".`, 'success');
       setToolForm(emptyTool);
       setEditingTool(null);
       refreshAll();
     } else {
-      setFeedback(data.error || 'Failed to save tool.');
+      announce(result.error, 'error');
     }
   }
 
   async function handleDelete(kind: Tab, slug: string) {
     if (!confirm('Remove this permanently? (Only dashboard-added items can be removed — curated originals can only be edited.)')) return;
-    await fetch(`/api/${kind}?slug=${encodeURIComponent(slug)}`, { method: 'DELETE' });
-    refreshAll();
+    if (deletingSlug) return;
+    setDeletingSlug(slug);
+    const result = await safeFetchJson<{ removed: boolean }>(`/api/${kind}?slug=${encodeURIComponent(slug)}`, {
+      method: 'DELETE',
+    });
+    setDeletingSlug(null);
+    if (result.ok) {
+      announce('Removed.', 'success');
+      refreshAll();
+    } else {
+      announce(result.error, 'error');
+    }
   }
 
   if (loading || !isAuthenticated) {
@@ -245,7 +280,23 @@ export default function DashboardPage() {
         ))}
       </div>
 
-      {feedback && <p className="mb-6 text-sm text-champagne">{feedback}</p>}
+      {feedback && (
+        <div
+          className={`mb-6 flex items-center justify-between border-l-2 px-4 py-3 text-sm transition-colors ${
+            feedbackKind === 'error' ? 'border-crimson text-crimson bg-crimson/5' : 'border-champagne text-champagne bg-champagne/5'
+          }`}
+        >
+          <span>{feedback}</span>
+          <button
+            onClick={() => setFeedback('')}
+            data-cursor-hover
+            aria-label="Dismiss"
+            className="ml-4 opacity-50 hover:opacity-100 transition-opacity"
+          >
+            ✕
+          </button>
+        </div>
+      )}
 
       {tab === 'cocktails' && (
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
@@ -286,8 +337,8 @@ export default function DashboardPage() {
                       Edit
                     </button>
                     {can('delete') && (
-                      <button onClick={() => handleDelete('cocktails', c.slug)} data-cursor-hover className="font-mono text-[10px] uppercase text-bone/40 hover:text-crimson">
-                        Remove
+                      <button onClick={() => handleDelete('cocktails', c.slug)} disabled={deletingSlug === c.slug} data-cursor-hover className="font-mono text-[10px] uppercase text-bone/40 hover:text-crimson disabled:opacity-40">
+                        {deletingSlug === c.slug ? 'Removing…' : 'Remove'}
                       </button>
                     )}
                   </div>
@@ -335,8 +386,8 @@ export default function DashboardPage() {
                       Edit
                     </button>
                     {can('delete') && (
-                      <button onClick={() => handleDelete('spirits', s.slug)} data-cursor-hover className="font-mono text-[10px] uppercase text-bone/40 hover:text-crimson">
-                        Remove
+                      <button onClick={() => handleDelete('spirits', s.slug)} disabled={deletingSlug === s.slug} data-cursor-hover className="font-mono text-[10px] uppercase text-bone/40 hover:text-crimson disabled:opacity-40">
+                        {deletingSlug === s.slug ? 'Removing…' : 'Remove'}
                       </button>
                     )}
                   </div>
@@ -383,8 +434,8 @@ export default function DashboardPage() {
                       Edit
                     </button>
                     {can('delete') && (
-                      <button onClick={() => handleDelete('tools', t.slug)} data-cursor-hover className="font-mono text-[10px] uppercase text-bone/40 hover:text-crimson">
-                        Remove
+                      <button onClick={() => handleDelete('tools', t.slug)} disabled={deletingSlug === t.slug} data-cursor-hover className="font-mono text-[10px] uppercase text-bone/40 hover:text-crimson disabled:opacity-40">
+                        {deletingSlug === t.slug ? 'Removing…' : 'Remove'}
                       </button>
                     )}
                   </div>

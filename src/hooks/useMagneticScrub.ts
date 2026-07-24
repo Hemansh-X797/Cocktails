@@ -3,28 +3,27 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 /**
- * Drives a continuous, fractional "position" value (in item-index units)
- * from three input sources — pointer drag, wheel, and momentum — and
- * settles it toward the nearest whole index with a spring once the input
- * stops. This is the actual mechanism behind a "luxury" scroll feel:
+ * Same drag/momentum/magnetic-settle mechanics as before, but restructured
+ * so nothing here calls setState on every animation frame.
  *
- *  - While dragging, position tracks the pointer 1:1 (no lag, no rubber
- *    banding against the input itself) so the hand always feels obeyed.
- *  - On release, the pointer's recent velocity carries the position
- *    forward (real inertia, not a hard stop).
- *  - Once velocity decays below a threshold, a critically-damped spring
- *    pulls position to the nearest integer — the "magnetic" settle — and
- *    that final glide always eases, it never snaps in a single frame.
- *  - Wheel input is treated as a continuous velocity impulse rather than
- *    "one tick = one slide", so a light touch nudges gently and a hard
- *    flick spins several slides, exactly like a heavy rotary dial.
+ * The previous version called `setPosition` inside the rAF loop, which
+ * meant every one of the ~60 position updates per second triggered a full
+ * React re-render of whatever consumed it — for a 3D carousel, that's a
+ * full scene-graph reconciliation 60 times a second just to move a
+ * number. That's the actual mechanism behind "laggy": not the animation
+ * itself, but React doing unrelated work in between every frame of it.
  *
- * `loop`, when true, wraps position into [0, count) so dragging past the
- * last item continues into the first rather than stopping dead.
+ * The fix: the continuously-changing value lives only in `positionRef`
+ * (a plain mutable ref). Consumers that need to *animate* something read
+ * `positionRef.current` inside their own rAF/useFrame loop and write
+ * directly to the DOM (style.transform) or to a Three.js object's
+ * transform — no React render involved. React state (`activeIndex`) is
+ * only touched when the rounded index actually changes, which for a
+ * carousel is a handful of times per second at most, not sixty.
  */
 export function useMagneticScrub(count: number, opts?: { loop?: boolean }) {
   const loop = opts?.loop ?? true;
-  const [position, setPosition] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
 
   const positionRef = useRef(0);
@@ -35,8 +34,9 @@ export function useMagneticScrub(count: number, opts?: { loop?: boolean }) {
   const lastX = useRef(0);
   const lastT = useRef(0);
   const rafRef = useRef<number>();
-  const wrapperWidthRef = useRef(240); // px per "slide" — calibrated by caller via setUnit
+  const wrapperWidthRef = useRef(240);
   const targetOverrideRef = useRef<number | null>(null);
+  const lastAnnouncedIndex = useRef(0);
 
   const setUnitPx = useCallback((px: number) => {
     wrapperWidthRef.current = px || 240;
@@ -55,8 +55,6 @@ export function useMagneticScrub(count: number, opts?: { loop?: boolean }) {
     function tick() {
       if (!draggingRef.current) {
         if (targetOverrideRef.current !== null) {
-          // Programmatic goTo(): spring-chase an explicit target (which may
-          // be more than one index away) rather than only the nearest one.
           const delta = targetOverrideRef.current - positionRef.current;
           velocityRef.current += delta * 0.08;
           velocityRef.current *= 0.78;
@@ -71,11 +69,9 @@ export function useMagneticScrub(count: number, opts?: { loop?: boolean }) {
           const speed = Math.abs(velocityRef.current);
 
           if (speed > 0.0025) {
-            // Momentum phase: coast, with friction.
             positionRef.current += velocityRef.current;
             velocityRef.current *= 0.92;
           } else {
-            // Magnetic settle phase: critically-damped spring to nearest index.
             const delta = nearest - positionRef.current;
             velocityRef.current += delta * 0.09;
             velocityRef.current *= 0.72;
@@ -89,15 +85,24 @@ export function useMagneticScrub(count: number, opts?: { loop?: boolean }) {
         }
 
         positionRef.current = wrap(positionRef.current);
-        setPosition(positionRef.current);
       }
+
+      // The only React state touch in the whole loop, and only when it
+      // actually needs to be — a label or dot indicator doesn't need to
+      // know about position at floating-point, sub-frame precision.
+      const rounded = ((Math.round(positionRef.current) % count) + count) % count;
+      if (rounded !== lastAnnouncedIndex.current) {
+        lastAnnouncedIndex.current = rounded;
+        setActiveIndex(rounded);
+      }
+
       rafRef.current = requestAnimationFrame(tick);
     }
     rafRef.current = requestAnimationFrame(tick);
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, [wrap]);
+  }, [wrap, count]);
 
   const onPointerDown = useCallback((e: React.PointerEvent) => {
     (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
@@ -117,7 +122,6 @@ export function useMagneticScrub(count: number, opts?: { loop?: boolean }) {
       const dx = e.clientX - dragStartX.current;
       const raw = dragStartPos.current - dx / wrapperWidthRef.current;
       positionRef.current = wrap(raw);
-      setPosition(positionRef.current);
 
       const now = performance.now();
       const dt = Math.max(now - lastT.current, 1);
@@ -133,23 +137,17 @@ export function useMagneticScrub(count: number, opts?: { loop?: boolean }) {
     if (!draggingRef.current) return;
     draggingRef.current = false;
     setIsDragging(false);
-    // Clamp residual velocity so a very fast flick still settles gracefully.
     velocityRef.current = Math.max(-0.35, Math.min(0.35, velocityRef.current));
   }, []);
 
-  const onWheel = useCallback(
-    (e: React.WheelEvent) => {
-      if (Math.abs(e.deltaY) < 1) return;
-      const impulse = (e.deltaY / wrapperWidthRef.current) * 2.1;
-      velocityRef.current = Math.max(-0.4, Math.min(0.4, velocityRef.current + impulse));
-    },
-    []
-  );
+  const onWheel = useCallback((e: React.WheelEvent) => {
+    if (Math.abs(e.deltaY) < 1) return;
+    const impulse = (e.deltaY / wrapperWidthRef.current) * 2.1;
+    velocityRef.current = Math.max(-0.4, Math.min(0.4, velocityRef.current + impulse));
+  }, []);
 
   const goTo = useCallback(
     (index: number) => {
-      // Approach via the shortest cyclic path so clicking a distant dot
-      // still glides the short way around rather than the long way.
       let target = index;
       if (loop) {
         let delta = index - positionRef.current;
@@ -162,7 +160,10 @@ export function useMagneticScrub(count: number, opts?: { loop?: boolean }) {
   );
 
   return {
-    position,
+    /** Read this inside your own rAF/useFrame loop for smooth, render-free animation. */
+    positionRef,
+    /** Low-frequency, render-safe: only changes when the active slide actually changes. */
+    activeIndex,
     isDragging,
     setUnitPx,
     bind: { onPointerDown, onPointerMove, onPointerUp: endDrag, onPointerLeave: endDrag, onWheel },
