@@ -27,6 +27,15 @@ export async function POST(req: NextRequest) {
     description: body.description,
     tastingNotes: Array.isArray(body.tastingNotes) ? body.tastingNotes : [],
     bestIn: Array.isArray(body.bestIn) ? body.bestIn : [],
+    flavorProfile: body.flavorProfile || {
+    Heat: 0,
+    Spice: 0,
+    Herbal: 0,
+    Fruited: 0,
+    Juniper: 0,
+    Citrus: 0,
+    Floral: 0,
+    },
     image: body.image || '',
   };
 
