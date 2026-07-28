@@ -10,6 +10,7 @@
     "description": "Made from rehydrated ancho chiles macerated for months before distillation, following a recipe dating to 1927 in Puebla. Deep smoked-pepper heat balanced with a raisin-like sweetness.",
     "tastingNotes": ["Smoked chile", "Dried fruit", "Slow building heat"],
     "flavorProfile": { "Heat": 9, "Spice": 8, "Herbal": 4, "Fruited": 5, "Juniper": 0, "Citrus": 2, "Floral": 1 },
+    "bestIn": ["sovereign-of-the-void"],
     "image": "/images/spirits/ancho_ryes.jpg"
   },
   {
@@ -23,6 +24,7 @@
     "description": "Crafted from a single harvest of organic Diamond Dankowskie Rye from a single estate. Distilled four times and rested for ten months to create unparalleled velvety softness.",
     "tastingNotes": ["Salted caramel", "Praline", "Crisp rye pepper"],
     "flavorProfile": { "Heat": 2, "Spice": 3, "Herbal": 1, "Fruited": 1, "Juniper": 0, "Citrus": 2, "Floral": 1 },
+    "bestIn": [],
     "image": "/images/spirits/belvedere-10-luxury-.webp"
   },
   {
@@ -36,6 +38,7 @@
     "description": "Certified organic rye vodka distilled using time-honored Polish traditions. Clean, subtle, and incredibly smooth with zero artificial additives.",
     "tastingNotes": ["Vanilla", "Faint white pepper", "Creamy almond"],
     "flavorProfile": { "Heat": 3, "Spice": 2, "Herbal": 1, "Fruited": 0, "Juniper": 0, "Citrus": 1, "Floral": 0 },
+    "bestIn": [],
     "image": "/images/spirits/belvedere-organic-vodka.webp"
   },
   {
@@ -49,6 +52,7 @@
     "description": "Triple-distilled British wheat vodka infused with natural catechu tree extract. Delivers a striking ink-black appearance without altering the classic, crisp vodka finish.",
     "tastingNotes": ["Clean wheat", "Faint liquorice", "Cold mineral finish"],
     "flavorProfile": { "Heat": 4, "Spice": 2, "Herbal": 3, "Fruited": 0, "Juniper": 0, "Citrus": 1, "Floral": 0 },
+    "bestIn": ["black-widow"],
     "image": "/images/spirits/Blavod.jpg"
   },
   {
@@ -62,6 +66,7 @@
     "description": "Vibrant blue liqueur flavored with the dried peel of the native Laraha citrus fruit. Essential for adding tropical orange warmth and high-contrast color to cocktails.",
     "tastingNotes": ["Bitter orange peel", "Sweet citrus", "Floral undertones"],
     "flavorProfile": { "Heat": 1, "Spice": 1, "Herbal": 2, "Fruited": 7, "Juniper": 0, "Citrus": 9, "Floral": 4 },
+    "bestIn": [],
     "image": "/images/spirits/blue-curacao.jpg"
   },
   {
@@ -75,6 +80,7 @@
     "description": "Ultra-premium 100% organic agave Tequila finished in freshly emptied Napa Valley red wine barrels, imparting a delicate blush rose tint and subtle berry warmth.",
     "tastingNotes": ["Fresh agave", "Red berries", "Subtle oak vanilla"],
     "flavorProfile": { "Heat": 5, "Spice": 3, "Herbal": 3, "Fruited": 7, "Juniper": 0, "Citrus": 4, "Floral": 5 },
+    "bestIn": [],
     "image": "/images/spirits/celosa-rose.jpg"
   },
   {
@@ -88,6 +94,7 @@
     "description": "A tribute to indigenous Mazahua culture housed in an iconic hand-painted ceramic decanter. Rich and full-bodied with complex wood-aged agave depth.",
     "tastingNotes": ["Toasted oak", "Nutmeg", "Dried plum", "Cinnamon"],
     "flavorProfile": { "Heat": 4, "Spice": 8, "Herbal": 2, "Fruited": 6, "Juniper": 0, "Citrus": 2, "Floral": 1 },
+    "bestIn": [],
     "image": "/images/spirits/claze-azul-anejo.jpg"
   },
   {
@@ -101,6 +108,7 @@
     "description": "A rare Joven tequila created by combining Clase Azul Plata with a special Reposado aged in French oak casks and an Extra Añejo finished in sherry casks.",
     "tastingNotes": ["Toasted hazelnut", "Dark honey", "Dried fig", "Light cocoa"],
     "flavorProfile": { "Heat": 3, "Spice": 6, "Herbal": 2, "Fruited": 7, "Juniper": 0, "Citrus": 3, "Floral": 2 },
+    "bestIn": [],
     "image": "/images/spirits/claze-azul-gold-tequila.jpg"
   },
   {
@@ -114,6 +122,7 @@
     "description": "Crafted from slow-cooked organic Weber Blue Agaves. Unaged and crisp, capturing the sweet, pure essence of the agave plant.",
     "tastingNotes": ["Fresh cooked agave", "Meyer lemon", "Mint", "Green apple"],
     "flavorProfile": { "Heat": 5, "Spice": 2, "Herbal": 5, "Fruited": 4, "Juniper": 0, "Citrus": 7, "Floral": 3 },
+    "bestIn": [],
     "image": "/images/spirits/claze-azul-plata.jpg"
   },
   {
@@ -127,6 +136,7 @@
     "description": "Recognized worldwide by its iconic hand-painted blue ceramic decanter. Smooth and silky with distinct notes of vanilla and candied wood.",
     "tastingNotes": ["Vanilla cream", "Candied orange peel", "Toasted oak"],
     "flavorProfile": { "Heat": 4, "Spice": 5, "Herbal": 2, "Fruited": 4, "Juniper": 0, "Citrus": 4, "Floral": 2 },
+    "bestIn": [],
     "image": "/images/spirits/claze-azul-reposado.jpg"
   },
   {
@@ -140,6 +150,7 @@
     "description": "The crown jewel of the Clase Azul distillery. Aged for five years in American whiskey and Spanish sherry casks, presented in a black decanter painted with platinum and 24-karat gold.",
     "tastingNotes": ["Sherry oak", "Dark chocolate", "Dried cherry", "Tobacco"],
     "flavorProfile": { "Heat": 3, "Spice": 9, "Herbal": 1, "Fruited": 8, "Juniper": 0, "Citrus": 1, "Floral": 0 },
+    "bestIn": [],
     "image": "/images/spirits/claze-azul-ultra-anejo.jpg"
   },
   {
@@ -153,6 +164,7 @@
     "description": "An exceptional Highland single malt matured for 18 years. Rich, bold, and complex with deep notes of dark chocolate and spiced citrus.",
     "tastingNotes": ["Seville orange", "Dark chocolate", "Cinnamon", "Old leather"],
     "flavorProfile": { "Heat": 6, "Spice": 8, "Herbal": 1, "Fruited": 8, "Juniper": 0, "Citrus": 5, "Floral": 1 },
+    "bestIn": [],
     "image": "/images/spirits/dalmore-18-whiskey.jpg"
   },
   {
@@ -166,6 +178,7 @@
     "description": "Crafted from pure sugarcane honeys and aged in former bourbon barrels before a finishing period in rich Pedro Ximénez sherry casks. Unfiltered and bottled at cask strength.",
     "tastingNotes": ["Port wine", "Dried fig", "Pipe tobacco", "Dark cinnamon"],
     "flavorProfile": { "Heat": 7, "Spice": 7, "Herbal": 0, "Fruited": 9, "Juniper": 0, "Citrus": 2, "Floral": 0 },
+    "bestIn": [],
     "image": "/images/spirits/diplomatico-ambassador-rum.jpg"
   },
   {
@@ -179,6 +192,7 @@
     "description": "Micro-distilled with eight botanicals including Fairmont Empress Hotel tea and butterfly pea blossom, giving it a natural indigo hue that turns pink when acid is added.",
     "tastingNotes": ["Juniper forward", "Earthy tea", "Soft citrus bloom"],
     "flavorProfile": { "Heat": 4, "Spice": 3, "Herbal": 6, "Fruited": 2, "Juniper": 8, "Citrus": 5, "Floral": 7 },
+    "bestIn": [],
     "image": "/images/spirits/empress-1908-indigo.jpg"
   },
   {
@@ -192,6 +206,7 @@
     "description": "Distilled with nine botanicals including black carrot, elderflower, and red rose petals. Pours a stunning translucent ruby pink.",
     "tastingNotes": ["Floral rose", "Subtle elderflower", "Citrus warmth"],
     "flavorProfile": { "Heat": 3, "Spice": 2, "Herbal": 4, "Fruited": 5, "Juniper": 6, "Citrus": 5, "Floral": 10 },
+    "bestIn": [],
     "image": "/images/spirits/empress1908 elderflower rose.jpg"
   },
   {
@@ -205,6 +220,7 @@
     "description": "Distilled in India using wild juniper harvested from the high altitudes of the Himalayas, alongside local botanicals like raw mango, turmeric, and cardamom.",
     "tastingNotes": ["Piney wild juniper", "Tart gondhoraj lime", "Earthy cardamom spice"],
     "flavorProfile": { "Heat": 5, "Spice": 7, "Herbal": 6, "Fruited": 3, "Juniper": 9, "Citrus": 7, "Floral": 2 },
+    "bestIn": [],
     "image": "/images/spirits/Hapusa-dry-gin.jpg"
   },
   {
@@ -218,6 +234,7 @@
     "description": "A neon-blue liqueur blending French vodka, cognac, and tropical fruit juices. Created for high-contrast visual builds and vibrant shots.",
     "tastingNotes": ["Tropical fruit", "Faint cognac warmth", "Citrus brightness"],
     "flavorProfile": { "Heat": 1, "Spice": 0, "Herbal": 1, "Fruited": 9, "Juniper": 0, "Citrus": 8, "Floral": 3 },
+    "bestIn": [],
     "image": "/images/spirits/Hpnotiq.webp"
   },
   {
@@ -231,6 +248,7 @@
     "description": "Triple-distilled in copper pot stills with 11 botanicals sourced from all across India, including vetiver, coriander, lemongrass, and orange peel.",
     "tastingNotes": ["Crisp juniper", "Peppery spice", "Lemongrass brightness"],
     "flavorProfile": { "Heat": 5, "Spice": 8, "Herbal": 5, "Fruited": 2, "Juniper": 8, "Citrus": 6, "Floral": 3 },
+    "bestIn": [],
     "image": "/images/spirits/jaisalmer-gin.jpg"
   },
   {
@@ -244,6 +262,7 @@
     "description": "A luxurious expression infused with hand-picked Kashmiri saffron and passed through golden leaf filters, creating a rich golden tint and velvety mouthfeel.",
     "tastingNotes": ["Warm saffron", "Earthy tea", "Citrus zests", "Piquant pepper"],
     "flavorProfile": { "Heat": 4, "Spice": 8, "Herbal": 6, "Fruited": 3, "Juniper": 7, "Citrus": 5, "Floral": 5 },
+    "bestIn": [],
     "image": "/images/spirits/jaisalmer-gold.jpg"
   },
   {
@@ -257,6 +276,7 @@
     "description": "Crafted from 100% blue Weber agave cooked in brick ovens and aged for a minimum of 36 months, presented in a handcrafted skull decanter.",
     "tastingNotes": ["Toasted caramel", "Dark chocolate", "Smoky wood", "Agave honey"],
     "flavorProfile": { "Heat": 5, "Spice": 7, "Herbal": 1, "Fruited": 5, "Juniper": 0, "Citrus": 2, "Floral": 1 },
+    "bestIn": [],
     "image": "/images/spirits/laneta-extra-anejo.jpg"
   },
   {
@@ -270,6 +290,7 @@
     "description": "Smooth plant-based cream liqueurs blended with rum, tequila, or vodka. Delivers a rich, silky texture without any dairy.",
     "tastingNotes": ["Creamy vanilla", "Ripe fruit / coffee", "Silky smooth sweet finish"],
     "flavorProfile": { "Heat": 1, "Spice": 1, "Herbal": 0, "Fruited": 8, "Juniper": 0, "Citrus": 3, "Floral": 2 },
+    "bestIn": [],
     "image": "/images/spirits/lustre-rum-strawberry-cafelatte-pineapple.jpg"
   },
   {
@@ -283,6 +304,7 @@
     "description": "London Dry gin base infused with juniper, black cardamom, and smoked tea, finished with reversed charcoal filtration to leave a deliberate ink-black tint.",
     "tastingNotes": ["Juniper forward", "Smoked tea", "Black cardamom"],
     "flavorProfile": { "Heat": 6, "Spice": 7, "Herbal": 5, "Fruited": 1, "Juniper": 8, "Citrus": 3, "Floral": 1 },
+    "bestIn": [],
     "image": "/images/spirits/obsidian-artisanal-gin.jpg"
   },
   {
@@ -296,6 +318,7 @@
     "description": "An award-winning dark gin distilled with roasted coffee beans, cacao nibs, and lapsang souchong tea leaves for a rich, dark botanical character.",
     "tastingNotes": ["Dark cocoa", "Roast coffee", "Smoky juniper"],
     "flavorProfile": { "Heat": 5, "Spice": 6, "Herbal": 4, "Fruited": 2, "Juniper": 7, "Citrus": 2, "Floral": 1 },
+    "bestIn": [],
     "image": "/images/spirits/obsidian-three-wrens-gin.jpg"
   },
   {
@@ -309,6 +332,7 @@
     "description": "Crafted from 100% Weber Blue Agave in the Highlands of Jalisco. Blended across 11 different oak barrel types to achieve an exceptionally smooth finish.",
     "tastingNotes": ["Caramel", "Vanilla", "Toasted dried fruits"],
     "flavorProfile": { "Heat": 4, "Spice": 5, "Herbal": 2, "Fruited": 6, "Juniper": 0, "Citrus": 3, "Floral": 2 },
+    "bestIn": [],
     "image": "/images/spirits/patron-el-alto-parade(green).jpg"
   },
   {
@@ -322,6 +346,7 @@
     "description": "Highland agave slow-cooked in brick ovens and distilled in small copper pot stills, then aged to perfection for luxurious smoothness.",
     "tastingNotes": ["Sweet agave", "Warm oak", "Vanilla bean"],
     "flavorProfile": { "Heat": 3, "Spice": 6, "Herbal": 1, "Fruited": 5, "Juniper": 0, "Citrus": 2, "Floral": 1 },
+    "bestIn": [],
     "image": "/images/spirits/patron-el-alto(blue).jpg"
   },
   {
@@ -335,6 +360,7 @@
     "description": "Distilled five times and finished with a proprietary ultra-fine filtration process, encased inside an iconic, custom hand-blown glass sculpture bottle.",
     "tastingNotes": ["Silky sweet corn", "Ultra clean finish", "Faint marshmallow"],
     "flavorProfile": { "Heat": 3, "Spice": 1, "Herbal": 0, "Fruited": 1, "Juniper": 0, "Citrus": 1, "Floral": 0 },
+    "bestIn": [],
     "image": "/images/spirits/Vavoom-vodka.jpg"
   }
 ]
