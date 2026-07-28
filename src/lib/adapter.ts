@@ -32,8 +32,8 @@ export interface Spirit {
   tagline: string;
   description: string;
   tastingNotes: string[];
-  bestIn?: string[];
-  flavorProfile?: Record<string, number>;
+  bestIn: string[];
+  flavorProfile: Record<string, number>;
   image: string;
 }
 
