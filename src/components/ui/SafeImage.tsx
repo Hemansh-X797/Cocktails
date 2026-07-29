@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, CSSProperties } from 'react';
 
 /**
  * Wraps next/image with a graceful fallback for the very real situation
@@ -14,6 +14,7 @@ export function SafeImage({
   alt,
   fill,
   className,
+  style,
   sizes,
   fallbackFrom = '#1a1a1a',
   fallbackTo = '#050505',
@@ -23,6 +24,7 @@ export function SafeImage({
   alt: string;
   fill?: boolean;
   className?: string;
+  style?: CSSProperties;
   sizes?: string;
   fallbackFrom?: string;
   fallbackTo?: string;
@@ -38,6 +40,7 @@ export function SafeImage({
           background: `linear-gradient(160deg, ${fallbackFrom}, ${fallbackTo})`,
           position: fill ? 'absolute' : 'relative',
           inset: fill ? 0 : undefined,
+          ...style,
         }}
       >
         <span className="font-mono text-[10px] uppercase tracking-widest text-bone/20">
@@ -54,6 +57,7 @@ export function SafeImage({
       fill={fill}
       sizes={sizes}
       className={className}
+      style={style}
       draggable={draggable}
       onError={() => setErrored(true)}
       unoptimized={src.startsWith('http')}
