@@ -96,6 +96,7 @@ export function LiquidTypography({
     }
 
     function resize() {
+      if (!canvas) return; // Guard against null reference for TS
       const parent = canvas.parentElement;
       width = parent ? parent.clientWidth : window.innerWidth;
       height = parent ? parent.clientHeight : window.innerHeight;
@@ -103,11 +104,12 @@ export function LiquidTypography({
       canvas.height = height * dpr;
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx?.setTransform(dpr, 0, 0, dpr, 0, 0);
       buildParticles();
     }
 
     function onMove(e: MouseEvent) {
+      if (!canvas) return; // Guard against null reference for TS
       const rect = canvas.getBoundingClientRect();
       mouse.x = e.clientX - rect.left;
       mouse.y = e.clientY - rect.top;
@@ -121,6 +123,7 @@ export function LiquidTypography({
     const swapEvery = 4200;
 
     function tick(now: number) {
+      if (!ctx) return;
       ctx.clearRect(0, 0, width, height);
 
       if (now - lastSwap > swapEvery) {
