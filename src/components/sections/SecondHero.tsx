@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { SketchfabEmbed } from '@/components/three/SketchfabEmbed';
+import { LiquidTypography } from '@/components/luxury/LiquidTypography';
 
 export function SecondHero() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -26,19 +26,12 @@ export function SecondHero() {
       <div className="bg-ruby-radial absolute inset-0" />
 
       {visible && (
-        <SketchfabEmbed
-          modelId="92d9d82f45ea40be8cb4774d929454db"
-          title="Wine Bottle and Glasses"
-          author="Karolina Renkiewicz"
-          authorUrl="https://sketchfab.com/KarolinaRenkiewicz"
-          modelUrl="https://sketchfab.com/3d-models/wine-bottle-and-glasses-92d9d82f45ea40be8cb4774d929454db"
-          className="absolute inset-0"
-        />
+        <LiquidTypography words={['Poured', 'Suspended', 'Held']} className="absolute inset-0" />
       )}
 
       <div className="pointer-events-none relative z-10 flex flex-col items-center text-center px-8">
-        <span className="section-eyebrow mb-6">Poured, Suspended, Held</span>
-        <h2 className="font-display text-5xl md:text-7xl text-bone max-w-3xl leading-[0.95]">
+        <span className="section-eyebrow mb-6 mix-blend-difference">Poured, Suspended, Held</span>
+        <h2 className="font-display text-5xl md:text-7xl text-bone/70 max-w-3xl leading-[0.95] mix-blend-difference">
           Bottle to glass,
           <br />
           nothing left to chance.

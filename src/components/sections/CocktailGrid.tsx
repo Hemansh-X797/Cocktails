@@ -1,4 +1,4 @@
-import { KineticMeshCard } from '@/components/cards/KineticMeshCard';
+import { CocktailSliceCard } from '@/components/cards/CocktailSliceCard';
 import type { Cocktail } from '@/lib/adapter';
 
 export function CocktailGrid({ cocktails }: { cocktails: Cocktail[] }) {
@@ -13,7 +13,7 @@ export function CocktailGrid({ cocktails }: { cocktails: Cocktail[] }) {
       </div>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {cocktails.map((cocktail) => (
-          <KineticMeshCard key={cocktail.slug} cocktail={cocktail} />
+          <CocktailSliceCard key={cocktail.slug} cocktail={cocktail} />
         ))}
       </div>
     </section>

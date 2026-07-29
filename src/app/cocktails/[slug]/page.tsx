@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import { SafeImage } from '@/components/ui/SafeImage';
 import Link from 'next/link';
 import { getAllCocktails } from '@/lib/content-store';
+import { HexFlavorChart } from '@/components/stats/HexFlavorChart';
 
 export const dynamic = 'force-dynamic';
 
@@ -40,18 +41,8 @@ export default async function CocktailDetailPage({ params }: { params: { slug: s
           </ul>
 
           <span className="section-eyebrow mt-12 block">Flavor Profile</span>
-          <div className="mt-6 space-y-3">
-            {Object.entries(cocktail.flavorProfile).map(([key, value]) => (
-              <div key={key}>
-                <div className="flex justify-between text-xs font-mono text-bone/50 mb-1">
-                  <span className="uppercase">{key}</span>
-                  <span>{value}%</span>
-                </div>
-                <div className="h-px bg-obsidian overflow-hidden">
-                  <div className="h-full bg-champagne" style={{ width: `${value}%` }} />
-                </div>
-              </div>
-            ))}
+          <div className="mt-4 -ml-8">
+            <HexFlavorChart profile={cocktail.flavorProfile} accent={cocktail.rimColor} />
           </div>
         </div>
 
